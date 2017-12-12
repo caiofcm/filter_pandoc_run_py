@@ -3,20 +3,34 @@ import sys
 import json
 from filter_pandoc_run_py import *
 
-import RestrictedPython
-
-compiler = RestrictedPython.compile.compile_restricted_exec
-
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 """
-	Convert to pandoc using the filter:
-	pandoc ./tests/test.md --to markdown -F ./filter_pandoc_run/filter_pandoc_run.py -o ./tests/test_conv.md
+
+	Pandoc convert using the filter from markdown to html:
+	pandoc ./test.md -F ../filter_pandoc_run_py/filter_pandoc_run_py.py  --to html -s -o ./tests//test.html
+
+	Pandoc convert using the filter from markdown to markdown:
+	! pandoc ./tests/test.md --to markdown -F ./filter_pandoc_run_py/filter_pandoc_run_py.py -o ./tests/test_conv.md
+
+	Generate the intermediary json ast file:
+	! pandoc ./tests/test.md -t json -o ./tests/test.json
 """
 
-# def test_gambiarra_debugger():
-# 	gambiarra_debugger('eu', 'voce', 'tu', 'vos')
-# 	pass
+def test_run_pandoc_process():
+
+	text = 'I am a **mark** *down*'
+	ret = run_pandoc(text)
+	d = json.loads(ret)
+	assert d[1][0]['c'][6]['t'] == 'Strong'
+
+	ret = run_pandoc(text, ['--from=markdown', '--to=html'])
+	assert ret == '<p>I am a <strong>mark</strong> <em>down</em></p>\r\n'
+
+	text = 'Oi sou um **mark** *down* \n\n New Line!'
+	ret = run_pandoc(text)
+	d = json.loads(ret)
+	assert d[1][0]['c'][-1]['t'] == 'Emph'
 
 def test_json_ast_reader():
 	'''
@@ -24,6 +38,9 @@ def test_json_ast_reader():
 	'''
 	dt = read_json(os.path.join(dir_path, 'test.json'))
 	assert isinstance(dt, (dict, list))
+
+	dt = read_json(os.path.join(dir_path, 'test.json'), 'string')
+	assert isinstance(dt, (str))
 
 def test_stdout_redirection():
 	code = """
@@ -38,50 +55,95 @@ for j in i :
 	assert s.getvalue() == '0\n1\n2\n'
 	pass
 
+def test_md_sample_regular_code():
+	MD_SAMPLE = '''
+```{.python }
+e = 'foo'
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][0]['c'][1] == "e = 'foo'"
+
+
+test_md_sample_regular_code()
+
+def test_md_sample_runnable():
+	MD_SAMPLE = '''
+```{.python .run}
+d = 1e3
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][0]['c'][1] == 'd = 1e3'
+
+def test_md_sample_run_inline():
+	MD_SAMPLE = '''
+Water density is `foo = 1`{.run}.
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][0]['c'][6]['t'] == 'Code'
+
+def test_md_sample_print():
+	MD_SAMPLE = '''
+```{.python .run}
+print('A={}'.format(2.0))
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][1]['c'][1]['t'] == 'BlockQuote'
+test_md_sample_print()
+
+def test_md_sample_print_text():
+	MD_SAMPLE = '''
+```{.python .run format=text}
+print('A={}'.format(2.0))
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][1]['t'] == 'Para'
+	pass
+
+def test_md_sample_print_hiding():
+	MD_SAMPLE = '''
+```{.python .run hide_code=True}
+print('A={}'.format(2.0))
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][0]['c'][1]['t'] == 'BlockQuote'
+	pass
+
+def test_md_sample_print_inline():
+	MD_SAMPLE = '''
+`print('Hi')`{.run}.
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][0]['t'] == 'Para'
+	pass
+
+
 def test_run_pandoc_like():
-	dt = read_json(os.path.join(dir_path, 'test.json'))
-	for d in dt[1]:
-		run_py_code_block(d['t'], d['c'], 'markdown', None)
-
-
-def test_os_command():
-	cmd = 'ls -al'
-	os.system(cmd)
-
-
-ALLOWED_PRINT_FUNCTION = """
-# from __future__ import print_function
-old = 1
-print('Hello World!')
-"""
-
-PRINT_SET_VAL_TOGETHER = """
-'New code'
-c = 3.14
-d = 2 * c
-# print('My d is = {}'.format(d))
-print('Oi Mundo!')
-"""
-
-def test_print_function_simple_prints():
-	loc = {'_print_': PrintCollector, '_getattr_': None}
-	code, errors = compiler(ALLOWED_PRINT_FUNCTION)[:2]
-	assert errors == ()
-	assert code is not None
-	exec(code, {}, loc)
-	aaa = loc['_print']()
-	print(aaa)
-	assert loc['_print']() == 'Hello World!\n'
-
-	code, errors = compiler(PRINT_SET_VAL_TOGETHER)[:2]
-	assert errors == ()
-	assert code is not None
-	exec(code, {}, loc)
-	aaa = loc['_print']()
-	print(aaa)
-	assert loc['_print']() == 'Oi Mundo!\n'
-
-# test_print_function_simple_prints(); quit()
+	"""
+	Requires test.json in the file directory.
+	It is generated from test.md as:
+	pandoc test.md --to json -o test.json
+	"""
+	dt = read_json(os.path.join(dir_path, 'test.json'), 'string')
+	applyJSONFilters([run_py_code_block], dt)
 
 ############################################
 ###########################################
