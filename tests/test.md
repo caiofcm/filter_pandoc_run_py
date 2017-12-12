@@ -3,17 +3,19 @@
 
 Testing it!
 
-```python
+```{.python show_input=True other=js}
 'Hello World!'
 c = 2.123
 ```
 
 Blah, Blah, virgula blah
 
-```python
+```{.python show_input=True}
 'New code'
-d = 2 * c
-print('My d is = {}'.format(d))
+# stringo = 'My d is = {}' % 1
+stringo = '%s %s' % ('one', 'two')
+stringo2 = 'alow {}'.format('Caio')
+print(stringo)
 ```
 
 ### New 

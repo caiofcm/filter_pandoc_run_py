@@ -10,9 +10,9 @@ compiler = RestrictedPython.compile.compile_restricted_exec
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
-def test_gambiarra_debugger():
-	gambiarra_debugger('eu', 'voce', 'tu', 'vos')
-	pass
+# def test_gambiarra_debugger():
+# 	gambiarra_debugger('eu', 'voce', 'tu', 'vos')
+# 	pass
 
 def test_json_ast_reader():
 	'''
@@ -34,11 +34,20 @@ def test_os_command():
 
 
 ALLOWED_PRINT_FUNCTION = """
-from __future__ import print_function
-print ('Hello World!')
+# from __future__ import print_function
+old = 1
+print('Hello World!')
 """
 
-def test_print_function__simple_prints():
+PRINT_SET_VAL_TOGETHER = """
+'New code'
+c = 3.14
+d = 2 * c
+# print('My d is = {}'.format(d))
+print('Oi Mundo!')
+"""
+
+def test_print_function_simple_prints():
 	loc = {'_print_': PrintCollector, '_getattr_': None}
 	code, errors = compiler(ALLOWED_PRINT_FUNCTION)[:2]
 	assert errors == ()
@@ -48,6 +57,15 @@ def test_print_function__simple_prints():
 	print(aaa)
 	assert loc['_print']() == 'Hello World!\n'
 
+	code, errors = compiler(PRINT_SET_VAL_TOGETHER)[:2]
+	assert errors == ()
+	assert code is not None
+	exec(code, {}, loc)
+	aaa = loc['_print']()
+	print(aaa)
+	assert loc['_print']() == 'Oi Mundo!\n'
+
+# test_print_function_simple_prints(); quit()
 
 ############################################
 ###########################################
