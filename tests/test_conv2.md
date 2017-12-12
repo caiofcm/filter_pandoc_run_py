@@ -10,16 +10,9 @@ c = 2.123
 
 Blah, Blah, virgula blah
 
-``` {.python show_input="True"}
-'New code'
-d = 2 * c
-# print('My d is = {}'.format(d))
-print('Hello World!')
-```
-
 Output:
 
-Hello World!
+one two
 
 ### New
 

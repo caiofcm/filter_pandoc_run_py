@@ -9,6 +9,10 @@ compiler = RestrictedPython.compile.compile_restricted_exec
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
+"""
+	Convert to pandoc using the filter:
+	pandoc ./tests/test.md --to markdown -F ./filter_pandoc_run/filter_pandoc_run.py -o ./tests/test_conv.md
+"""
 
 # def test_gambiarra_debugger():
 # 	gambiarra_debugger('eu', 'voce', 'tu', 'vos')
@@ -21,6 +25,18 @@ def test_json_ast_reader():
 	dt = read_json(os.path.join(dir_path, 'test.json'))
 	assert isinstance(dt, (dict, list))
 
+def test_stdout_redirection():
+	code = """
+i = [0,1,2]
+for j in i :
+    print(j)
+"""
+	with stdoutIO() as s:
+		exec(code)
+
+	print("out:", s.getvalue())
+	assert s.getvalue() == '0\n1\n2\n'
+	pass
 
 def test_run_pandoc_like():
 	dt = read_json(os.path.join(dir_path, 'test.json'))
