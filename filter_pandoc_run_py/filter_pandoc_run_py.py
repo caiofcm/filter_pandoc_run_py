@@ -10,9 +10,9 @@ from shutil import which
 from subprocess import Popen, PIPE
 import json
 try:
-    from StringIO import StringIO
+		from StringIO import StringIO
 except ImportError:
-    from io import StringIO
+		from io import StringIO
 import contextlib
 
 # from pandocfilters import toJSONFilter, Para, Image, \
@@ -34,7 +34,7 @@ from pandocfilters import *
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # code_locals = {'_print_': PrintCollector}  # , '_getattr_': None
-code_locals = {}
+code_locals = {'fig_counter': 0}
 
 
 ############################################
@@ -88,7 +88,7 @@ def stdoutIO(stdout=None):
 	code = """
 i = [0,1,2]
 for j in i :
-    print(j)
+		print(j)
 """
 	with stdoutIO() as s:
 		exec(code)
@@ -115,14 +115,19 @@ def run_code(source_code):
 		print_string = '<font color="red">Code failed to Run</font>'
 	return print_string
 
-def adjust_print_output(printed_var, format_type = None):
-	format_type = 'blockquote' if format_type is None else format_type
-	# return [Para([Str('Output:')]), Para([Str(printed_var)])]
-	# printed_var = "<br />".join(printed_var.split("\n"))
+
+def from_txt_to_ast_pandoc_code(printed_var):
 	printed_var = "\n\n".join(printed_var.split("\n"))
 	txt_as_pandoc_obj_str = run_pandoc(printed_var)
 	out = "\n".join(txt_as_pandoc_obj_str.splitlines())  # Replace \r\n with \n
 	txt_as_pandoc_obj = json.loads(txt_as_pandoc_obj_str)
+	metaData = txt_as_pandoc_obj[0]
+	astCode = txt_as_pandoc_obj[1]
+	return metaData, astCode
+
+def adjust_print_output(printed_var, format_type = None):
+	format_type = 'blockquote' if format_type is None else format_type
+	txt_as_pandoc_obj = from_txt_to_ast_pandoc_code(printed_var)
 	cod = txt_as_pandoc_obj[1]
 	if format_type == 'blockquote':
 		cod = [BlockQuote([Para([Str('Output:')]), BlockQuote(txt_as_pandoc_obj[1])])]
@@ -130,12 +135,44 @@ def adjust_print_output(printed_var, format_type = None):
 		cod = txt_as_pandoc_obj[1]
 	return cod
 
+def get_key_in_keyval_list(keyvals, key, fallback_not_found):
+	value = fallback_not_found
+	for kw in keyvals:
+		if key == kw[0]:
+			value = kw[1]
+			break
+	return value
+
+def handle_inline_plot(code, classes, keyvals, format, ident):
+	plt = code_locals['plt']
+	fignums = plt.get_fignums()
+	kw = keyvals
+	ast_ret_code = []
+	md_code = ''
+	# ast_fig_kw = kw.copy() #addition keyvalus ? todo
+	for num in fignums:
+		unique_code = repr(plt.figure(num))
+		fname = get_filename4code("plt", unique_code)
+		kw_cap = 'caption{}'.format(num) if num > 1 else 'caption'
+		caption = get_key_in_keyval_list(kw, kw_cap, '')  # fname.split('\\')[1]
+		kw_lbl = 'label{}'.format(num) if num > 1 else 'label'
+		label = get_key_in_keyval_list(kw, kw_lbl, code_locals['fig_counter'])
+		kw_wdth = 'width{}'.format(num) if num > 1 else 'width'
+		width = get_key_in_keyval_list(kw, kw_wdth, '')
+		kw_ext = 'ext{}'.format(num) if num > 1 else 'ext'
+		ext = get_key_in_keyval_list(kw, kw_ext, 'png')
+		filePath = '{}.{}'.format(fname, ext)
+		plt.savefig(filePath, format=ext)
+		ast_ret_code += [Para([Image([ident, [], []],
+                               [Str(caption)], [filePath, "fig:"])])]	
+	return ast_ret_code
+
 def run_py_code_block(key, value, format, meta):
 	return_ast = []
 	if key == 'CodeBlock':
 		[[ident, classes, keyvals], code] = value
 		if "python" in classes and "run" in classes:
-			caption, typef, keyvals = get_caption(keyvals)
+			# caption, typef, keyvals = get_caption(keyvals)
 			
 			printed_string = run_code(code)
 
@@ -150,6 +187,15 @@ def run_py_code_block(key, value, format, meta):
 				format_type = get_value(keyvals, 'format')[0]
 				ast_print = adjust_print_output(printed_string, format_type)
 				return_ast += ast_print
+
+			if 'plt' in code_locals:
+				fignums = code_locals['plt'].get_fignums()
+				if len(fignums) > 0:
+					ast_figure = handle_inline_plot(code, classes, keyvals, format, ident)
+					code_locals['plt'].close('all')
+					return_ast += ast_figure
+				# Continue from here:
+				# https://github.com/jgm/pandocfilters/blob/master/examples/plantuml.py
 
 			return return_ast
 	elif key == 'Code':

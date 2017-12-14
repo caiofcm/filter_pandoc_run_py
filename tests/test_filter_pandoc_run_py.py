@@ -17,6 +17,10 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 	! pandoc ./tests/test.md -t json -o ./tests/test.json
 """
 
+#--------------------------------------------
+# 	 Low Level tests 	 
+#--------------------------------------------
+
 def test_run_pandoc_process():
 
 	text = 'I am a **mark** *down*'
@@ -55,6 +59,10 @@ for j in i :
 	assert s.getvalue() == '0\n1\n2\n'
 	pass
 
+#--------------------------------------------
+# 	 Testing code Samples run and Print 	 
+#--------------------------------------------
+
 def test_md_sample_regular_code():
 	MD_SAMPLE = '''
 ```{.python }
@@ -66,8 +74,6 @@ e = 'foo'
 	d = json.loads(processed)
 	assert d[1][0]['c'][1] == "e = 'foo'"
 
-
-test_md_sample_regular_code()
 
 def test_md_sample_runnable():
 	MD_SAMPLE = '''
@@ -99,7 +105,6 @@ print('A={}'.format(2.0))
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
 	assert d[1][1]['c'][1]['t'] == 'BlockQuote'
-test_md_sample_print()
 
 def test_md_sample_print_text():
 	MD_SAMPLE = '''
@@ -125,6 +130,7 @@ print('A={}'.format(2.0))
 	assert d[1][0]['c'][1]['t'] == 'BlockQuote'
 	pass
 
+
 def test_md_sample_print_inline():
 	MD_SAMPLE = '''
 `print('Hi')`{.run}.
@@ -135,6 +141,26 @@ def test_md_sample_print_inline():
 	assert d[1][0]['t'] == 'Para'
 	pass
 
+#--------------------------------------------
+# 	 Testing Inline Image to document 	 
+#--------------------------------------------
+
+def test_inline_plot():
+	MD_SAMPLE = '''
+```{.python .run caption="cap1" label="lbl1"}
+from matplotlib import pyplot as plt
+plt.plot([1, 2], [3, 4], 'dr-')
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][1]['c'][0]['t'] == 'Image'
+
+
+#--------------------------------------------
+# 	 Testing Full Convertion 	 
+#--------------------------------------------
 
 def test_run_pandoc_like():
 	"""
@@ -161,3 +187,4 @@ def insider_Debugger():
 
 if __name__ == '__main__':
 	insider_Debugger()
+	pass

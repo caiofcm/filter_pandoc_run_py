@@ -1,0 +1,92 @@
+<h1 id="executing-python-codes-in-a-markdown-file">Executing python codes in a markdown file</h1>
+<h2 id="regular-block-code">Regular block code</h2>
+<p>A regular markdown code definition</p>
+<p>Syntax: {.python}</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">e <span class="op">=</span> <span class="st">&#39;foo&#39;</span></code></pre></div>
+<h2 id="a-runnable-block-code">A runnable block code</h2>
+<p>For a runnable code append the class .run</p>
+<p>Syntax: {.python .run}</p>
+<div class="sourceCode"><pre class="sourceCode python run"><code class="sourceCode python">d <span class="op">=</span> <span class="fl">1e3</span></code></pre></div>
+<h2 id="a-runnable-inline-code">A runnable inline code</h2>
+<p>An inline code can also be run in python.</p>
+<p>Syntax: `(code)`{.run}</p>
+<p>Water density is <code class="run">foo = 1</code>.</p>
+<h2 id="a-runnable-code-with-print-statement">A runnable code with print statement</h2>
+<h3 id="printing-to-a-blockquote">Printing to a BlockQuote</h3>
+<p>Run a python code and show the print output.</p>
+<p>Syntax: {.python .run format=[blockquote (default), text]}</p>
+<div class="sourceCode"><pre class="sourceCode python run"><code class="sourceCode python">m <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> d
+<span class="bu">print</span>(<span class="st">&#39;The total mass is {:.2f} $m^3$&#39;</span>.<span class="bu">format</span>(m))</code></pre></div>
+<blockquote>
+<p>Output:</p>
+<blockquote>
+<p>The total mass is 2000.00 <span class="math inline"><em>m</em><sup>3</sup></span></p>
+</blockquote>
+</blockquote>
+<h3 id="printing-to-regular-paragraph">Printing to regular Paragraph</h3>
+<div class="sourceCode" format="text"><pre class="sourceCode python run"><code class="sourceCode python">m <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> d
+<span class="bu">print</span>(<span class="st">&#39;The total mass is {:.2f} $m^3$&#39;</span>.<span class="bu">format</span>(m))</code></pre></div>
+<p>The total mass is 2000.00 <span class="math inline"><em>m</em><sup>3</sup></span></p>
+<h2 id="a-runnable-code-with-print-statement-hiding-the-code-block">A runnable code with print statement hiding the code block</h2>
+<p>Run a python code and show the print output, but hiding the code.</p>
+<p>Syntax: {.python .run format=[blockquote (default), text] hide_code=[False, True]}</p>
+<blockquote>
+<p>Output:</p>
+<blockquote>
+<p>Variable d is 1000.0</p>
+</blockquote>
+</blockquote>
+<h2 id="a-runnable-inline-code-with-print-statement">A runnable inline code with print statement</h2>
+<p>It will replace the inline code by the print function output</p>
+<p>Syntax: `(print(code))`{.run}</p>
+<p>Obs: It is returned the raw string (math mode will not work)</p>
+<p>Water density is 1000.0 <span class="math inline"><em>k</em><em>g</em>/<em>m</em><sup>3</sup></span> and the total mass was 2000.00 $m^3$</p>
+<h2 id="figures-generation">Figures generation</h2>
+<h2 id="a-runnable-code-with-one-figure-generation">$ A runnable code with one figure generation</h2>
+<p>It will run the code and save the created pyplot figure to a file, than it creates a Image text block to load it.</p>
+<p>Syntax: {.python .run format=[blockquote (default), text] hide_code=[False, True] caption=&quot;&quot; label=&quot;&quot; width=&quot;&quot;}}</p>
+<ul>
+<li>Uses <em>pandoc-fignos</em> filter notation for caption, label and width.</li>
+<li>If more than one figure is created the configuration keyvals can be added, such as: caption2=&quot;&quot; label2=&quot;&quot; width2=&quot;&quot; ext2=&quot;&quot; ...</li>
+<li>Figure is saved to folder <code>./plt-images</code></li>
+</ul>
+<div class="sourceCode" caption="Figure Number One" label="my_fig"><pre class="sourceCode python run"><code class="sourceCode python"><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt
+plt.plot([<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>], <span class="st">&#39;dr-&#39;</span>)</code></pre></div>
+<div class="figure">
+<img src="plt-images\a4991efa42fd41435adf3d212bfc3bd2e8e69289.png" alt="Figure Number One" />
+<p class="caption">Figure Number One</p>
+</div>
+<h3 id="a-runnable-code-with-two-figures-generation">A runnable code with two figures generation</h3>
+<p>It will run the code and save the created pyplot figure to a file, than it creates a Image text block to load it.</p>
+<p>Syntax: {.python .run format=[blockquote (default), text] hide_code=[False, True] caption=&quot;&quot; label=&quot;&quot; width=&quot;&quot;}}</p>
+<ul>
+<li>Uses <em>pandoc-fignos</em> filter notation for caption, label and width.</li>
+<li>If more than one figure is created the configuration keyvals can be added, such as: caption2=&quot;&quot; label2=&quot;&quot; width2=&quot;&quot; ext2=&quot;&quot; ...</li>
+<li>Figure is saved to folder <code>./plt-images</code></li>
+</ul>
+<div class="sourceCode" caption="Number One" caption2="Other Figure" label="my_fig" label2="my_fig2"><pre class="sourceCode python run"><code class="sourceCode python"><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt
+<span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D
+<span class="im">from</span> matplotlib <span class="im">import</span> cm
+<span class="im">import</span> numpy <span class="im">as</span> np
+
+<span class="co"># First Figure</span>
+plt.plot([<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>], <span class="st">&#39;dr-&#39;</span>)
+
+<span class="co"># Second Figure</span>
+fig <span class="op">=</span> plt.figure()
+ax <span class="op">=</span> fig.gca(projection<span class="op">=</span><span class="st">&#39;3d&#39;</span>)
+X <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.25</span>)
+Y <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.25</span>)
+X, Y <span class="op">=</span> np.meshgrid(X, Y)
+Z <span class="op">=</span> np.sin(np.sqrt(X<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> Y<span class="op">**</span><span class="dv">2</span>))
+surf <span class="op">=</span> ax.plot_surface(X, Y, Z, cmap<span class="op">=</span>cm.coolwarm)
+fig.colorbar(surf, shrink<span class="op">=</span><span class="fl">0.5</span>, aspect<span class="op">=</span><span class="dv">5</span>)</code></pre></div>
+<div class="figure">
+<img src="plt-images\dcec91f382bd7f0f2df23f8ef5a8983804d5e237.png" alt="Number One" />
+<p class="caption">Number One</p>
+</div>
+<div class="figure">
+<img src="plt-images\fdf880438b6582443f721d06def9482a325bcafb.png" alt="Other Figure" />
+<p class="caption">Other Figure</p>
+</div>
+<p>End</p>
