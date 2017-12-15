@@ -19,7 +19,7 @@ install:
   - pip install coveralls
 # command to run tests
 script:
-  - pytest # or py.test for Python versions 3.5 and below
+  # - pytest # or py.test for Python versions 3.5 and below
   - coverage run --source=filter_pandoc_run_py setup.py pytest
 after_success:
   - coveralls  
