@@ -59,7 +59,7 @@ From a markdown file such as:
 d = 1e3
 m = 2 * d
 print('The total mass is {:.2f} $m^3$'.format(m))
-```
+\```
 ```
 
 `pandoc FILE --to markdown -F filter_pandoc_run_py.py -o OUTFILE.md`
