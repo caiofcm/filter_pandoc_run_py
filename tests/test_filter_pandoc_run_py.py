@@ -217,7 +217,7 @@ plt.plot([1, 2], [3, 4], 'dr-')
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	# assert d[1][1]['c'][0]['t'] == 'Image'
+	assert d[1][1]['c'][0]['t'] == 'Image'
 	pass #This is not failing on win but is failing at travis ci
 
 #--------------------------------------------
