@@ -161,6 +161,54 @@ plt.plot([1, 2], [3, 4], 'dr-')
 	d = json.loads(processed)
 	assert d[1][1]['c'][0]['t'] == 'Image'
 
+#--------------------------------------------
+# 	Workaround for keeping vscode highlight in codeblock
+#		Instead of the braces syntax, uses: 
+# ```python
+# #.classes key=vals
+# <code>
+# ```
+#--------------------------------------------
+
+def test_md_sample_runnable_new_syntax():
+	MD_SAMPLE = '''
+```python
+# filter: {.run }
+d = 1e3
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert '1e3' in d[1][0]['c'][1]
+
+	MD_SAMPLE = '''
+```python
+# filter: {.run key1=val1 .class2 key2="valor dois"}
+d = 1e3
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert '1e3' in d[1][0]['c'][1]
+
+	MD_SAMPLE = '''
+```python
+# filter: {.run caption="cap1" label="lbl1"}
+import matplotlib
+matplotlib.use('AGG')
+from matplotlib import pyplot as plt
+plt.plot([1, 2], [3, 4], 'dr-')
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d[1][1]['c'][0]['t'] == 'Image'
+
+
+test_md_sample_runnable_new_syntax()
 
 #--------------------------------------------
 # 	 Testing Full Convertion 	 
@@ -193,3 +241,14 @@ def insider_Debugger():
 if __name__ == '__main__':
 	insider_Debugger()
 	pass
+
+
+# TODO
+# - All string returned passed through the ast pandoc conversion
+# 
+# 
+# 
+# 
+# 
+# 
+# 

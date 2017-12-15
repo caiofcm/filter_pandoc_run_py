@@ -9,6 +9,7 @@ import sys
 from shutil import which
 from subprocess import Popen, PIPE
 import json
+import re
 try:
 		from StringIO import StringIO
 except ImportError:
@@ -161,10 +162,31 @@ def handle_inline_plot(code, classes, keyvals, format, ident):
                                [Str(caption)], [filePath, "fig:"])])]	
 	return ast_ret_code
 
+
+def workaround_classes_with_commonmark_syntax(code, classes, keyvals):
+	'''
+	Configuration string as a pytho comment to get classes and key-vals
+	Example of configuration: #filter: {.c1 .c2 key1=val1 key2="value 2" }
+	'''
+	try:
+		re.search(r'^\s*#\s*filter:\s+{', code).group()
+	except AttributeError	as e:
+		return code
+	filter_configs = code[code.find("{") + 1:code.find("}")]
+	found_class = re.findall(r'\.(\w+)', filter_configs)
+	kw_pairs_simple = re.findall(r'(\w+)=(\w+)', filter_configs)
+	kw_pairs_cplx = re.findall(r'(\w+)=("[\w\-\s]+")', filter_configs)
+	found_keyvals = kw_pairs_simple + kw_pairs_cplx
+	classes += found_class
+	keyvals += found_keyvals
+	return
+
 def run_py_code_block(key, value, format, meta):
 	return_ast = []
 	if key == 'CodeBlock':
 		[[ident, classes, keyvals], code] = value
+		workaround_classes_with_commonmark_syntax(code, classes, keyvals)
+
 		if "python" in classes and "run" in classes:
 			# caption, typef, keyvals = get_caption(keyvals)
 			

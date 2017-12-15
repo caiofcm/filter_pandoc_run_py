@@ -50,10 +50,12 @@
 <li>If more than one figure is created the configuration keyvals can be added, such as: caption2=&quot;&quot; label2=&quot;&quot; width2=&quot;&quot; ext2=&quot;&quot; ...</li>
 <li>Figure is saved to folder <code>./plt-images</code></li>
 </ul>
-<div class="sourceCode" caption="Figure Number One" label="my_fig"><pre class="sourceCode python run"><code class="sourceCode python"><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt
+<div class="sourceCode" caption="Figure Number One" label="my_fig"><pre class="sourceCode python run"><code class="sourceCode python"><span class="im">import</span> matplotlib
+matplotlib.use(<span class="st">&#39;AGG&#39;</span>)
+<span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt
 plt.plot([<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>], <span class="st">&#39;dr-&#39;</span>)</code></pre></div>
 <div class="figure">
-<img src="plt-images\a4991efa42fd41435adf3d212bfc3bd2e8e69289.png" alt="Figure Number One" />
+<img src="plt-images\be492ab0b9060c1e86131347ed6e5445dade3128.png" alt="Figure Number One" />
 <p class="caption">Figure Number One</p>
 </div>
 <h3 id="a-runnable-code-with-two-figures-generation">A runnable code with two figures generation</h3>
@@ -64,7 +66,9 @@ plt.plot([<span class="dv">1</span>, <span class="dv">2</span>], [<span class="d
 <li>If more than one figure is created the configuration keyvals can be added, such as: caption2=&quot;&quot; label2=&quot;&quot; width2=&quot;&quot; ext2=&quot;&quot; ...</li>
 <li>Figure is saved to folder <code>./plt-images</code></li>
 </ul>
-<div class="sourceCode" caption="Number One" caption2="Other Figure" label="my_fig" label2="my_fig2"><pre class="sourceCode python run"><code class="sourceCode python"><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt
+<div class="sourceCode" caption="Number One" caption2="Other Figure" label="my_fig" label2="my_fig2"><pre class="sourceCode python run"><code class="sourceCode python"><span class="im">import</span> matplotlib
+matplotlib.use(<span class="st">&#39;AGG&#39;</span>)
+<span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt
 <span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D
 <span class="im">from</span> matplotlib <span class="im">import</span> cm
 <span class="im">import</span> numpy <span class="im">as</span> np
@@ -82,11 +86,11 @@ Z <span class="op">=</span> np.sin(np.sqrt(X<span class="op">**</span><span clas
 surf <span class="op">=</span> ax.plot_surface(X, Y, Z, cmap<span class="op">=</span>cm.coolwarm)
 fig.colorbar(surf, shrink<span class="op">=</span><span class="fl">0.5</span>, aspect<span class="op">=</span><span class="dv">5</span>)</code></pre></div>
 <div class="figure">
-<img src="plt-images\dcec91f382bd7f0f2df23f8ef5a8983804d5e237.png" alt="Number One" />
+<img src="plt-images\f0d6239d6a57028c6a4aca993ef251663d82a680.png" alt="Number One" />
 <p class="caption">Number One</p>
 </div>
 <div class="figure">
-<img src="plt-images\fdf880438b6582443f721d06def9482a325bcafb.png" alt="Other Figure" />
+<img src="plt-images\9586e9de73d4dfa2719d0f5cac67f40a3c43ad00.png" alt="Other Figure" />
 <p class="caption">Other Figure</p>
 </div>
 <p>End</p>

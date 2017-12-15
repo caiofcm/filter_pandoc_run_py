@@ -1,14 +1,15 @@
 
 # Executing python codes in a markdown file
 
-
+This file uses the CommonMark syntax such that IDEs (VSCode) can highlight properly the `CodeBlock`
+ 
 ## Regular block code
 
 A regular markdown code definition
 
 Syntax: \{.python}
 
-```{.python }
+```python
 e = 'foo'
 ```
 
@@ -18,7 +19,8 @@ For a runnable code append the class .run
 
 Syntax: \{.python .run}
 
-```{.python .run}
+```python
+#filter: {.run}
 d = 1e3
 ```
 
@@ -38,14 +40,18 @@ Run a python code and show the print output.
 
 Syntax: \{.python .run format=[blockquote (default), text]\}
 
-```{.python .run}
+```python
+	#		filter: {
+		# .run	
+		# }
 m = 2 * d
 print('The total mass is {:.2f} $m^3$'.format(m))
 ```
 
 ### Printing to regular Paragraph
 
-```{.python .run format=text}
+```python
+# filter: { .run format=text}
 m = 2 * d
 print('The total mass is {:.2f} $m^3$'.format(m))
 ```
@@ -56,7 +62,8 @@ Run a python code and show the print output, but hiding the code.
 
 Syntax: \{.python .run format=[blockquote (default), text]\ hide_code=[False, True]}
 
-```{.python .run hide_code=True}
+```python
+# filter: { .run hide_code=True}
 m = 2 * d
 print('Variable d is {}'.format(d))
 ```
@@ -83,7 +90,11 @@ Syntax: \{.python .run format=[blockquote (default), text]\ hide_code=[False, Tr
 - If more than one figure is created the configuration keyvals can be added, such as: caption2="" label2="" width2="" ext2="" ...
 - Figure is saved to folder `./plt-images`
 
-```{.python .run caption="Figure Number One" label="my_fig"}
+```python
+#filter: {.run 
+# 				caption="Figure Number One" 
+# 				label="my_fig" 
+# 				}
 import matplotlib
 matplotlib.use('AGG')
 from matplotlib import pyplot as plt
@@ -100,7 +111,8 @@ Syntax: \{.python .run format=[blockquote (default), text]\ hide_code=[False, Tr
 - If more than one figure is created the configuration keyvals can be added, such as: caption2="" label2="" width2="" ext2="" ...
 - Figure is saved to folder `./plt-images`
 
-```{.python .run caption="Number One" caption2="Other Figure" label="my_fig" label2="my_fig2"}
+```python
+#filter: {.run caption="Number One" caption2="Other Figure" label="my_fig" label2="my_fig2"}
 import matplotlib
 matplotlib.use('AGG')
 from matplotlib import pyplot as plt

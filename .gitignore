@@ -1,6 +1,8 @@
 .vscode/
 **/plt-images/
 filter_pandoc_run_py_env/
+testconv*.html
+testconv*.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
