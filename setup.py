@@ -5,7 +5,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='filter_pandoc_run_py',
-      version='0.1',
+      version='0.2',
       description='Run python code from a markdown file and output print or images it',
       long_description=read('README.md'),
       url='https://github.com/caiofcm/filter_pandoc_run_py',
@@ -36,7 +36,7 @@ setup(name='filter_pandoc_run_py',
           'Programming Language :: Python :: 3.4',
           'Programming Language :: Python :: 3.5',
           'Programming Language :: Python :: 3.6',
-          
+
           'Environment :: Console',
           'Intended Audience :: End Users/Desktop',
           'Intended Audience :: Developers',

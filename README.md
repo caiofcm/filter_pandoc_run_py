@@ -1,5 +1,8 @@
 # filter_pandoc_run_py 
 
+[![Build Status](https://img.shields.io/travis/caiofcm/filter_pandoc_run_py/master.svg)](https://travis-ci.org/caiofcm/filter_pandoc_run_py/branches)
+<!-- [![Coveralls](https://img.shields.io/coveralls/github/chdemko/pandoc-latex-fontsize/master.svg)](https://coveralls.io/github/chdemko/pandoc-latex-fontsize?branch=master) -->
+<!-- [![Scrutinizer](https://img.shields.io/scrutinizer/g/chdemko/pandoc-latex-fontsize.svg)](https://scrutinizer-ci.com/g/chdemko/pandoc-latex-fontsize/) -->
 [![PyPI version](https://img.shields.io/pypi/v/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 [![PyPI format](https://img.shields.io/pypi/format/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 [![License](https://img.shields.io/pypi/l/filter_pandoc_run_py.svg)](https://raw.githubusercontent.com/caiofcm/filter_pandoc_run_py/master/LICENSE)
