@@ -202,6 +202,9 @@ def run_py_code_block(key, value, format, meta):
 				return return_ast
 	pass
 
+def main():
+	toJSONFilter(run_py_code_block)
+
 ############################################
 ###########################################
 #
@@ -213,4 +216,4 @@ def run_py_code_block(key, value, format, meta):
 ###########################################
 
 if __name__ == "__main__":
-	toJSONFilter(run_py_code_block)
+	main()

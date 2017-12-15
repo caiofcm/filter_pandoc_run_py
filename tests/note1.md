@@ -10,14 +10,14 @@ $G_i = k (-C_s)$
 
 Considering $C_s$ as 0.323
 
-```{.python .runnable}
+```{.python .run}
 C_s = 0.323
 print('Growth initial is = {}'.format(1e-2*(-C_s)))
 ```
 
 Because of that, we should take very care with this approach!
 
-```{.python .runnable format="text"}
+```{.python .run format="text"}
 print('This is a print with equation $E = m c^2$')
 ```
 
