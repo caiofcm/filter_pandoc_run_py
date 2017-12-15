@@ -33,6 +33,16 @@ setup(name='filter_pandoc_run_py',
           "Development Status :: 3 - Alpha",
           "Topic :: Utilities",
           "License :: OSI Approved :: BSD License",  # to be reviewed
+          'Programming Language :: Python :: 3.4',
+          'Programming Language :: Python :: 3.5',
+          'Programming Language :: Python :: 3.6',
+          
+          'Environment :: Console',
+          'Intended Audience :: End Users/Desktop',
+          'Intended Audience :: Developers',
+          'Topic :: Software Development :: Build Tools',
+          'Topic :: Software Development :: Documentation',
+          'Topic :: Text Processing :: Filters',
       ]
 
       # Alternatively, if you want to distribute just a my_module.py, uncomment

@@ -3,7 +3,6 @@
 [![PyPI version](https://img.shields.io/pypi/v/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 [![PyPI format](https://img.shields.io/pypi/format/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 [![License](https://img.shields.io/pypi/l/filter_pandoc_run_py.svg)](https://raw.githubusercontent.com/caiofcm/filter_pandoc_run_py/master/LICENSE)
-[![Downloads](https://img.shields.io/pypi/dm/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 [![Python version](https://img.shields.io/pypi/pyversions/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 [![Development Status](https://img.shields.io/pypi/status/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 
