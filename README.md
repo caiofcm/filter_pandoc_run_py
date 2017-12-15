@@ -1,7 +1,7 @@
 # pandoc_run_python
 
 
-*pandoc_run_python* is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. OBS: Code has to be **trusted**
+*pandoc_run_python* is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. Also, it save any created pyplot figure to a folder and include it as a Image. Code has to be **trusted**
 
 [pandoc]: http://pandoc.org/
 
