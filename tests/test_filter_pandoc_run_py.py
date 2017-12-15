@@ -207,9 +207,6 @@ plt.plot([1, 2], [3, 4], 'dr-')
 	d = json.loads(processed)
 	assert d[1][1]['c'][0]['t'] == 'Image'
 
-
-test_md_sample_runnable_new_syntax()
-
 #--------------------------------------------
 # 	 Testing Full Convertion 	 
 #--------------------------------------------
