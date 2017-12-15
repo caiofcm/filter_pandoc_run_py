@@ -32,7 +32,7 @@ setup(name='filter_pandoc_run_py',
       classifiers=[
           "Development Status :: 3 - Alpha",
           "Topic :: Utilities",
-          "License :: BSD License", #to be reviewed
+          "License :: OSI Approved :: BSD License",  # to be reviewed
       ]
 
       # Alternatively, if you want to distribute just a my_module.py, uncomment
