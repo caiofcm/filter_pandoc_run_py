@@ -5,7 +5,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='filter_pandoc_run_py',
-      version='0.2',
+      version='0.3',
       long_description=read('README.md'),
       url='https://github.com/caiofcm/filter_pandoc_run_py',
       download_url='https://github.com/caiofcm/filter_pandoc_run_py/archive/0.1.tar.gz',
