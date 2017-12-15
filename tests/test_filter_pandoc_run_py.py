@@ -30,7 +30,8 @@ def test_run_pandoc_process():
 	assert d[1][0]['c'][6]['t'] == 'Strong'
 
 	ret = run_pandoc(text, ['--from=markdown', '--to=html'])
-	assert ret == '<p>I am a <strong>mark</strong> <em>down</em></p>\r\n'
+	ret = ret.replace('\r', '')
+	assert ret == '<p>I am a <strong>mark</strong> <em>down</em></p>\n'
 
 	text = 'Oi sou um **mark** *down* \n\n New Line!'
 	ret = run_pandoc(text)

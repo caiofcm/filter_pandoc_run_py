@@ -6,7 +6,6 @@ def read(fname):
 
 setup(name='filter_pandoc_run_py',
       version='0.2',
-      description='Run python code from a markdown file and output print or images it',
       long_description=read('README.md'),
       url='https://github.com/caiofcm/filter_pandoc_run_py',
       download_url='https://github.com/caiofcm/filter_pandoc_run_py/archive/0.1.tar.gz',
