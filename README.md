@@ -1,5 +1,11 @@
 # pandoc_run_python
 
+[![PyPI version](https://img.shields.io/pypi/v/pandoc_run_python.svg)](https://pypi.org/project/pandoc_run_python/)
+[![PyPI format](https://img.shields.io/pypi/format/pandoc_run_python.svg)](https://pypi.org/project/pandoc_run_python/)
+[![License](https://img.shields.io/pypi/l/pandoc_run_python.svg)](https://raw.githubusercontent.com/caiofcm/pandoc_run_python/master/LICENSE)
+[![Downloads](https://img.shields.io/pypi/dm/pandoc_run_python.svg)](https://pypi.org/project/pandoc_run_python/)
+[![Python version](https://img.shields.io/pypi/pyversions/pandoc_run_python.svg)](https://pypi.org/project/pandoc_run_python/)
+[![Development Status](https://img.shields.io/pypi/status/pandoc_run_python.svg)](https://pypi.org/project/pandoc_run_python/)
 
 *pandoc_run_python* is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. Also, it save any created pyplot figure to a folder and include it as a Image. Code has to be **trusted**
 
