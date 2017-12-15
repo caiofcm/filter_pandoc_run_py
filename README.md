@@ -29,6 +29,10 @@ Install *pandoc_run_python* as root using the bash command
 	cd dir
 	pip install .
 
+Or get it from PYPI:
+
+	pip install filter_pandoc_run_py
+
 
 ## How to Use It
 
