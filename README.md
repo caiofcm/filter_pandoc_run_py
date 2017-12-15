@@ -42,7 +42,7 @@ Syntax: `{.python .run format=[blockquote (default), text] hide_code=[False (def
 
 ### For `Code`
 
-The syntax is \`(print(code))\`\{.run\}`
+The syntax is \`(print(code))\`\{.run\}
 
 "Pretty print" unable: output is the raw print statement output string
 
