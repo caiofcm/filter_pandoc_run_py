@@ -8,7 +8,7 @@
 [![Python version](https://img.shields.io/pypi/pyversions/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 [![Development Status](https://img.shields.io/pypi/status/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 
-*filter_pandoc_run_py * is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. Also, it save any created pyplot figure to a folder and include it as a Image. Code has to be **trusted**
+*filter_pandoc_run_py* is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. Also, it save any created pyplot figure to a folder and include it as a Image. Code has to be **trusted**
 
 [pandoc]: http://pandoc.org/
 
@@ -77,11 +77,20 @@ print('The total mass is {:.2f} $m^3$'.format(m))
 > > The total mass is 2000.00 $m^3$
 ```
 
+It is also possible to use the syntax:
+
+```
+```python
+# filter: { .run .class key1=val key2="val 2"}
+code ..
+```
+```
+
 ## Getting Help
 
 If you have any difficulties with *filter_pandoc_run_py*, please feel welcome to [file an issue] on github so that we can help.
 
-[file an issue]: https://github.com/
+[file an issue]: https://github.com/caiofcm/filter_pandoc_run_py/issues
 
 
 
