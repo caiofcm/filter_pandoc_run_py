@@ -1,7 +1,13 @@
-# pandoc_run_python
+# filter_pandoc_run_py 
 
+[![PyPI version](https://img.shields.io/pypi/v/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
+[![PyPI format](https://img.shields.io/pypi/format/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
+[![License](https://img.shields.io/pypi/l/filter_pandoc_run_py.svg)](https://raw.githubusercontent.com/caiofcm/filter_pandoc_run_py/master/LICENSE)
+[![Downloads](https://img.shields.io/pypi/dm/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
+[![Python version](https://img.shields.io/pypi/pyversions/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
+[![Development Status](https://img.shields.io/pypi/status/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 
-*pandoc_run_python* is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. Also, it save any created pyplot figure to a folder and include it as a Image. Code has to be **trusted**
+*filter_pandoc_run_py * is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. Also, it save any created pyplot figure to a folder and include it as a Image. Code has to be **trusted**
 
 [pandoc]: http://pandoc.org/
 
@@ -21,9 +27,9 @@ Tested only from markdown to markdown / html
 
 ## Installation
 
-*pandoc_run_python* requires [python] (tested in version > 3.0)
+*filter_pandoc_run_py* requires [python] (tested in version > 3.0)
 
-Install *pandoc_run_python* as root using the bash command
+Install *filter_pandoc_run_py* as root using the bash command
 
 	git clone URL
 	cd dir
@@ -72,7 +78,7 @@ print('The total mass is {:.2f} $m^3$'.format(m))
 
 ## Getting Help
 
-If you have any difficulties with *pandoc_run_python*, please feel welcome to [file an issue] on github so that we can help.
+If you have any difficulties with *filter_pandoc_run_py*, please feel welcome to [file an issue] on github so that we can help.
 
 [file an issue]: https://github.com/
 
