@@ -1,0 +1,10 @@
+cycler==0.10.0
+## !! Could not determine repository location
+filter-pandoc-run-py==0.1
+matplotlib==2.1.1
+numpy==1.13.3
+pandocfilters==1.4.2
+pyparsing==2.2.0
+python-dateutil==2.6.1
+pytz==2017.3
+six==1.11.0

@@ -15,12 +15,7 @@ except ImportError:
 		from io import StringIO
 import contextlib
 
-# from pandocfilters import toJSONFilter, Para, Image, \
-# 	get_filename4code, get_caption, get_extension, \
-# 	get_value, Emph, Str, CodeBlock, Code, BlockQuote, \
-# 	walk, applyJSONFilters
 from pandocfilters import *
-# from .PrintCollector import PrintCollector
 
 ############################################
 ###########################################
@@ -33,7 +28,6 @@ from pandocfilters import *
 ###########################################
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-# code_locals = {'_print_': PrintCollector}  # , '_getattr_': None
 code_locals = {'fig_counter': 0}
 
 
@@ -207,11 +201,6 @@ def run_py_code_block(key, value, format, meta):
 				return_ast += [Str(removed_last_line_break)]
 				return return_ast
 	pass
-
-
-# def deemph(key, val, fmt, meta):
-#     if key == 'Emph':
-#         return walk(val, 1, fmt, meta)
 
 ############################################
 ###########################################

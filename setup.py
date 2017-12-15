@@ -2,11 +2,28 @@ from setuptools import setup, find_packages
 
 setup(name='filter_pandoc_run_py',
       version='0.1',
-      description='filter_pandoc_run_py',
+      description='Run python code from a markdown file and output print or images it',
       url='To do',
       author='Caio Marcellos',
       author_email='caiocuritiba@gmail.com',
       license='MIT',
       packages=find_packages(),
-      install_requires=['RestrictedPython'],
-      zip_safe=False)
+     install_requires=['pandocfilters', 'matplotlib'],
+      keywords='pandoc filters markdown python notes',
+      zip_safe=False,
+      entry_points={
+          'console_scripts': [
+              'filter_pandoc_run_py = filter_pandoc_run_py.filter_pandoc_run_py:main',
+          ],
+      },
+      extras_require={
+          'dev': ['check-manifest'],
+          'test': ['coverage'],
+      },
+      setup_requires=['pytest-runner'],
+      tests_require=['pytest', 'coverage'],
+
+      # Alternatively, if you want to distribute just a my_module.py, uncomment
+      # this:
+    #   py_modules=["filter_pandoc_run_py"],
+)

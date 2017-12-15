@@ -84,6 +84,8 @@ Syntax: \{.python .run format=[blockquote (default), text]\ hide_code=[False, Tr
 - Figure is saved to folder `./plt-images`
 
 ```{.python .run caption="Figure Number One" label="my_fig"}
+import matplotlib
+matplotlib.use('AGG')
 from matplotlib import pyplot as plt
 plt.plot([1, 2], [3, 4], 'dr-')
 ```
@@ -99,6 +101,8 @@ Syntax: \{.python .run format=[blockquote (default), text]\ hide_code=[False, Tr
 - Figure is saved to folder `./plt-images`
 
 ```{.python .run caption="Number One" caption2="Other Figure" label="my_fig" label2="my_fig2"}
+import matplotlib
+matplotlib.use('AGG')
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm

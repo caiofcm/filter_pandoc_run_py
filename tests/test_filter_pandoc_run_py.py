@@ -1,7 +1,8 @@
 import os
-import sys
 import json
+# from filter_pandoc_run_py import *
 from filter_pandoc_run_py import *
+from subprocess import call
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -60,7 +61,7 @@ for j in i :
 	pass
 
 #--------------------------------------------
-# 	 Testing code Samples run and Print 	 
+# 	 Testing code Samples run and Print
 #--------------------------------------------
 
 def test_md_sample_regular_code():
@@ -148,6 +149,8 @@ def test_md_sample_print_inline():
 def test_inline_plot():
 	MD_SAMPLE = '''
 ```{.python .run caption="cap1" label="lbl1"}
+import matplotlib
+matplotlib.use('AGG')
 from matplotlib import pyplot as plt
 plt.plot([1, 2], [3, 4], 'dr-')
 ```
@@ -168,6 +171,8 @@ def test_run_pandoc_like():
 	It is generated from test.md as:
 	pandoc test.md --to json -o test.json
 	"""
+	call(['pandoc', os.path.join(dir_path, 'test.md'), '--to',
+            'json', '-o', os.path.join(dir_path, 'test.json')])
 	dt = read_json(os.path.join(dir_path, 'test.json'), 'string')
 	applyJSONFilters([run_py_code_block], dt)
 
@@ -181,7 +186,6 @@ def test_run_pandoc_like():
 ###########################################
 ###########################################
 def insider_Debugger():
-	# generate_json_ast()
 	test_run_pandoc_like()
 	pass
 
