@@ -27,7 +27,7 @@ def test_run_pandoc_process():
 	text = 'I am a **mark** *down*'
 	ret = run_pandoc(text)
 	d = json.loads(ret)
-	assert d[1][0]['c'][6]['t'] == 'Strong'
+	assert d['blocks'][0]['c'][6]['t'] == 'Strong'
 
 	ret = run_pandoc(text, ['--from=markdown', '--to=html'])
 	ret = ret.replace('\r', '')
@@ -36,7 +36,7 @@ def test_run_pandoc_process():
 	text = 'Oi sou um **mark** *down* \n\n New Line!'
 	ret = run_pandoc(text)
 	d = json.loads(ret)
-	assert d[1][0]['c'][-1]['t'] == 'Emph'
+	assert d['blocks'][0]['c'][-1]['t'] == 'Emph'
 
 def test_json_ast_reader():
 	'''
@@ -74,7 +74,7 @@ e = 'foo'
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][0]['c'][1] == "e = 'foo'"
+	assert d['blocks'][0]['c'][1] == "e = 'foo'"
 
 
 def test_md_sample_runnable():
@@ -86,7 +86,7 @@ d = 1e3
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][0]['c'][1] == 'd = 1e3'
+	assert d['blocks'][0]['c'][1] == 'd = 1e3'
 
 def test_md_sample_run_inline():
 	MD_SAMPLE = '''
@@ -95,7 +95,7 @@ Water density is `foo = 1`{.run}.
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][0]['c'][6]['t'] == 'Code'
+	assert d['blocks'][0]['c'][6]['t'] == 'Code'
 
 def test_md_sample_print():
 	MD_SAMPLE = '''
@@ -106,7 +106,7 @@ print('A={}'.format(2.0))
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][1]['c'][1]['t'] == 'BlockQuote'
+	assert d['blocks'][1]['c'][1]['t'] == 'BlockQuote'
 
 def test_md_sample_print_text():
 	MD_SAMPLE = '''
@@ -117,7 +117,7 @@ print('A={}'.format(2.0))
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][1]['t'] == 'Para'
+	assert d['blocks'][1]['t'] == 'Para'
 	pass
 
 def test_md_sample_print_hiding():
@@ -129,7 +129,7 @@ print('A={}'.format(2.0))
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][0]['c'][1]['t'] == 'BlockQuote'
+	assert d['blocks'][0]['c'][1]['t'] == 'BlockQuote'
 	pass
 
 
@@ -140,7 +140,17 @@ def test_md_sample_print_inline():
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][0]['t'] == 'Para'
+	assert d['blocks'][0]['t'] == 'Para'
+	pass
+
+def test_md_sample_print_inline_ast_transformed():
+	MD_SAMPLE = '''
+I said: `print('Hello **word**!')`{.run}.
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d['blocks'][0]['t'] == 'Para'
 	pass
 
 #--------------------------------------------
@@ -159,7 +169,7 @@ plt.plot([1, 2], [3, 4], 'dr-')
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][1]['c'][0]['t'] == 'Image'
+	assert d['blocks'][1]['c'][0]['t'] == 'Image'
 
 #--------------------------------------------
 # 	Workaround for keeping vscode highlight in codeblock
@@ -192,7 +202,7 @@ d = 1e3
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert '1e3' in d[1][0]['c'][1]
+	assert '1e3' in d['blocks'][0]['c'][1]
 
 	MD_SAMPLE = '''
 ```python
@@ -203,7 +213,7 @@ d = 1e3
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert '1e3' in d[1][0]['c'][1]
+	assert '1e3' in d['blocks'][0]['c'][1]
 
 	MD_SAMPLE = '''
 ```python
@@ -217,7 +227,7 @@ plt.plot([1, 2], [3, 4], 'dr-')
 	ast_string = run_pandoc(MD_SAMPLE)
 	processed = applyJSONFilters([run_py_code_block], ast_string)
 	d = json.loads(processed)
-	assert d[1][1]['c'][0]['t'] == 'Image'
+	assert d['blocks'][1]['c'][0]['t'] == 'Image'
 	pass #This is not failing on win but is failing at travis ci
 
 #--------------------------------------------

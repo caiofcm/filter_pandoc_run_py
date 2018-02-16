@@ -22,7 +22,7 @@ To apply the filter, use the following option with pandoc:
 
 Example:
 
-	pandoc ./tests/test.md -t markdown filter_pandoc -o test_converted.md
+	pandoc ./tests/test.md -t markdown filter_pandoc_run_py -o test_converted.md
 
 Tested only from markdown to markdown / html
 
