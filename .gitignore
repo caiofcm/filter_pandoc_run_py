@@ -3,6 +3,8 @@
 filter_pandoc_run_py_env/
 testconv*.html
 testconv*.md
+**/*_converted.*
+**/test.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
