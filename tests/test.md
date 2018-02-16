@@ -71,6 +71,28 @@ Obs: It is returned the raw string (math mode will not work)
 
 Water density is `print(d)`{.run} $kg/m^3$ and the total mass was `print('{:.2f} $m^3$'.format(m))`{.run}
 
+## A runnable inline code to fill a table
+
+It will replace the inline **code** by the print function output
+
+Syntax: \`(print(code))\`\{.run\}
+
+Obs: It is returned the raw string (math mode will not work)
+
+```{.python .run hide_code=True}
+s = [0, 1, 2, 3, 4]
+sStr = str(s)
+sStr = sStr.replace(',', '|')
+sStr = sStr[1:-1]
+sStr += '|'
+```
+
+Var | $exp1$ | $exp2$ | $exp3$ | $exp4$ | $exp5$
+------  | ------  | ------  | ------  | ------  | ------  |
+$IAP_f$ | 12.83 | 9.785 | 32.85 | 30.92 | 33.09 |
+$K_e$ | 37.75 | 37.75 | 41.64 | 41.64 | 39.35 |
+$\frac{G_f}{G_i}$ | `print(sStr)`{.run}
+
 ## Figures generation
 
 ### A runnable code with one figure generation

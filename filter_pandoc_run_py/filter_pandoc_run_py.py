@@ -116,8 +116,8 @@ def from_txt_to_ast_pandoc_code(printed_var):
 	txt_as_pandoc_obj_str = run_pandoc(printed_var)
 	out = "\n".join(txt_as_pandoc_obj_str.splitlines())  # Replace \r\n with \n
 	txt_as_pandoc_obj = json.loads(txt_as_pandoc_obj_str)
-	metaData = txt_as_pandoc_obj[0]
-	astCode = txt_as_pandoc_obj[1]
+	metaData = txt_as_pandoc_obj['meta']
+	astCode = txt_as_pandoc_obj['blocks']
 	return metaData, astCode
 
 def adjust_print_output(printed_var, format_type = None):
