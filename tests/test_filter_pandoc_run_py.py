@@ -42,6 +42,8 @@ def test_json_ast_reader():
 	'''
 	Json generated as: pandoc test.md -t json -o test.json
 	'''
+	call(['pandoc', os.path.join(dir_path, 'test.md'), '--to',
+            'json', '-o', os.path.join(dir_path, 'test.json')])
 	dt = read_json(os.path.join(dir_path, 'test.json'))
 	assert isinstance(dt, (dict, list))
 
@@ -247,7 +249,7 @@ plt.plot([1, 2], [3, 4], 'dr-')
 # 	 Testing Full Convertion 	 
 #--------------------------------------------
 
-def auxiliar_debugger_test_run_pandoc_like():
+def test_run_pandoc_like():
 	"""
 	Requires test.json in the file directory.
 	It is generated from test.md as:
@@ -268,7 +270,7 @@ def auxiliar_debugger_test_run_pandoc_like():
 ###########################################
 ###########################################
 def insider_Debugger():
-	auxiliar_debugger_test_run_pandoc_like()
+	test_run_pandoc_like()
 	pass
 
 if __name__ == '__main__':
