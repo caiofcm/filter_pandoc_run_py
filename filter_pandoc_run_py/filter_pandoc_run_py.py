@@ -112,7 +112,8 @@ def run_code(source_code):
 
 
 def from_txt_to_ast_pandoc_code(printed_var):
-	printed_var = "\n\n".join(printed_var.split("\n"))
+	# if breakLine:
+	# 	printed_var = "\n\n".join(printed_var.split("\n"))
 	txt_as_pandoc_obj_str = run_pandoc(printed_var)
 	out = "\n".join(txt_as_pandoc_obj_str.splitlines())  # Replace \r\n with \n
 	txt_as_pandoc_obj = json.loads(txt_as_pandoc_obj_str)
@@ -122,11 +123,13 @@ def from_txt_to_ast_pandoc_code(printed_var):
 
 def adjust_print_output(printed_var, format_type = None):
 	format_type = 'blockquote' if format_type is None else format_type
-	txt_as_pandoc_obj = from_txt_to_ast_pandoc_code(printed_var)
-	cod = txt_as_pandoc_obj[1]
 	if format_type == 'blockquote':
-		cod = [BlockQuote([Para([Str('Output:')]), BlockQuote(txt_as_pandoc_obj[1])])]
+		printed_var = "\n\n".join(printed_var.split("\n"))
+		txt_as_pandoc_obj = from_txt_to_ast_pandoc_code(printed_var)
+		cod = [	BlockQuote([Para([Str('Output:')]), 
+						BlockQuote(txt_as_pandoc_obj[1])])]
 	elif format_type == 'text':
+		txt_as_pandoc_obj = from_txt_to_ast_pandoc_code(printed_var)
 		cod = txt_as_pandoc_obj[1]
 	return cod
 
@@ -219,9 +222,20 @@ def run_py_code_block(key, value, format, meta):
 		if "run" in classes:
 			printed_string = run_code(code)
 			removed_last_line_break = printed_string[0:-1]
+
 			if printed_string:
-				return_ast += [Str(removed_last_line_break)]
-				return return_ast
+				metaAst, ast_print = from_txt_to_ast_pandoc_code(removed_last_line_break)
+		# 	# ast_print[0]['t'] = 'Str'
+		# 		# return_ast.append(ast_print)
+				# return_ast.append([Para('Hello you')])
+				return ast_print[0]['c']
+				# return Str(removed_last_line_break)
+				# return RawInline('html', 'Hello')
+				# return return_ast
+		# 		# return_ast += [Str(removed_last_line_break)]
+		# 	# if printed_string:
+		# 		return return_ast
+		# return Str('Yes!')
 	pass
 
 def main():

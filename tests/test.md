@@ -2,7 +2,9 @@
 # Executing python codes in a markdown file
 
 
-## Regular block code
+## Cases without printing
+
+### Regular block code
 
 A regular markdown code definition
 
@@ -12,7 +14,7 @@ Syntax: \{.python}
 e = 'foo'
 ```
 
-## A runnable block code
+### A runnable block code
 
 For a runnable code append the class .run
 
@@ -22,15 +24,15 @@ Syntax: \{.python .run}
 d = 1e3
 ```
 
-## A runnable inline code
+### A runnable inline code
 
 An inline code can also be run in python.
 
 Syntax: \`(code)\`\{.run\}
 
-Water density is `foo = 1`{.run}.
+Code to run is `foo = 1`{.run}.
 
-## A runnable code with print statement
+## Cases with printing
 
 ### Printing to a BlockQuote
 
@@ -50,7 +52,7 @@ m = 2 * d
 print('The total mass is {:.2f} $m^3$'.format(m))
 ```
 
-## A runnable code with print statement hiding the code block
+### A runnable code with print statement hiding the code block
 
 Run a python code and show the print output, but hiding the code.
 
@@ -61,7 +63,25 @@ m = 2 * d
 print('Variable d is {}'.format(d))
 ```
 
-## A runnable inline code with print statement
+### Printing a string from python having markdown syntax
+
+Syntax: \{.python .run format=[text]\}
+
+```{.python .run format=text}
+a = '5.0 $\\frac{kg}{m^3}$'
+b = 1.0
+## table can be obtained from a lib such as tabulate 
+
+s = '''
+A | B |
+---- | ---- |
+{} | {} $\\frac{{kg}}{{m^3}}$ |
+'''.format(a, b)
+
+print(s)
+```
+
+### A runnable inline code with print statement
 
 It will replace the inline code by the print function output
 
@@ -70,28 +90,6 @@ Syntax: \`(print(code))\`\{.run\}
 Obs: It is returned the raw string (math mode will not work)
 
 Water density is `print(d)`{.run} $kg/m^3$ and the total mass was `print('{:.2f} $m^3$'.format(m))`{.run}
-
-## A runnable inline code to fill a table
-
-It will replace the inline **code** by the print function output
-
-Syntax: \`(print(code))\`\{.run\}
-
-Obs: It is returned the raw string (math mode will not work)
-
-```{.python .run hide_code=True}
-s = [0, 1, 2, 3, 4]
-sStr = str(s)
-sStr = sStr.replace(',', '|')
-sStr = sStr[1:-1]
-sStr += '|'
-```
-
-Var | $exp1$ | $exp2$ | $exp3$ | $exp4$ | $exp5$
-------  | ------  | ------  | ------  | ------  | ------  |
-$IAP_f$ | 12.83 | 9.785 | 32.85 | 30.92 | 33.09 |
-$K_e$ | 37.75 | 37.75 | 41.64 | 41.64 | 39.35 |
-$\frac{G_f}{G_i}$ | `print(sStr)`{.run}
 
 ## Figures generation
 
@@ -144,4 +142,8 @@ surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm)
 fig.colorbar(surf, shrink=0.5, aspect=5)
 ```
 
-End
+## Non filter related tests
+
+### Math expression
+
+Oi math $\dfrac{1}{2} - a^2 = 2$
