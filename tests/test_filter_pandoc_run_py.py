@@ -42,6 +42,8 @@ def test_json_ast_reader():
 	'''
 	Json generated as: pandoc test.md -t json -o test.json
 	'''
+	call(['pandoc', os.path.join(dir_path, 'test.md'), '--to',
+            'json', '-o', os.path.join(dir_path, 'test.json')])
 	dt = read_json(os.path.join(dir_path, 'test.json'))
 	assert isinstance(dt, (dict, list))
 
@@ -153,6 +155,19 @@ I said: `print('Hello **word**!')`{.run}.
 	assert d['blocks'][0]['t'] == 'Para'
 	pass
 
+
+def test_md_sample_render_table():
+	MD_SAMPLE = '''
+A | B |
+---- | ---- |
+C | D |
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert d['blocks'][0]['t'] == 'Table'
+	pass
+
 #--------------------------------------------
 # 	 Testing Inline Image to document 	 
 #--------------------------------------------
@@ -240,7 +255,7 @@ def test_run_pandoc_like():
 	It is generated from test.md as:
 	pandoc test.md --to json -o test.json
 	"""
-	call(['pandoc', os.path.join(dir_path, 'test.md'), '--to',
+	call(['pandoc', os.path.join(dir_path, 'test_one_p.md'), '--to',
             'json', '-o', os.path.join(dir_path, 'test.json')])
 	dt = read_json(os.path.join(dir_path, 'test.json'), 'string')
 	applyJSONFilters([run_py_code_block], dt)
