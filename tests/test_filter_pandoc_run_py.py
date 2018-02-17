@@ -247,7 +247,7 @@ plt.plot([1, 2], [3, 4], 'dr-')
 # 	 Testing Full Convertion 	 
 #--------------------------------------------
 
-def test_run_pandoc_like():
+def auxiliar_debugger_test_run_pandoc_like():
 	"""
 	Requires test.json in the file directory.
 	It is generated from test.md as:
@@ -268,7 +268,7 @@ def test_run_pandoc_like():
 ###########################################
 ###########################################
 def insider_Debugger():
-	test_run_pandoc_like()
+	auxiliar_debugger_test_run_pandoc_like()
 	pass
 
 if __name__ == '__main__':
