@@ -8,7 +8,7 @@
 [![Python version](https://img.shields.io/pypi/pyversions/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 [![Development Status](https://img.shields.io/pypi/status/filter_pandoc_run_py.svg)](https://pypi.org/project/filter_pandoc_run_py/)
 
-*filter_pandoc_run_py* is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. Also, it save any created pyplot figure to a folder and include it as a Image. Code has to be **trusted**
+*filter_pandoc_run_py* is a [pandoc] filter for execute python codes written in `CodeBlocks` or inline `Code`. It receives the print statement output and place it to the markdown converted file. Also, it save any created pyplot figure to a folder and include it as an image. Code has to be **trusted**
 
 [pandoc]: http://pandoc.org/
 
@@ -18,13 +18,14 @@
 
 To apply the filter, use the following option with pandoc:
 
-	pandoc INFILE -F filter_pandoc_run_py --to FORMAT -o OUTFILE
+	pandoc INPUT_FILE -F filter_pandoc_run_py --to OUTPUT_FORMAT -o OUTPUT_FILE
 
 Example:
 
-	pandoc ./tests/test.md -t markdown filter_pandoc_run_py -o test_converted.md
+	pandoc ./tests/test.md -F filter_pandoc_run_py -t gfm -o test_converted.md
 
-Tested only from markdown to markdown / html
+- You can convert it to any pandoc supported format;
+- When converted to a markdown format it can change some part of the text to conform with the default style (e.g. changing setext-style headers to ATX headers).
 
 ## Installation
 
@@ -49,13 +50,20 @@ Create a regular markdown code but appending a class .run to it.
 
 Syntax: `{.python .run format=[blockquote (default), text] hide_code=[False (default), True] }`
 
+The following syntax is also support for enabling standard IDE code highlight:
+
+```python
+#filter: {.run format=[blockquote (default), text] hide_code=[False (default), True] }
+.... code ....
+```
+
 "Pretty print" enable: output of print statement is converted and is rendered
 
 ### For `Code`
 
 The syntax is \`(print(code))\`\{.run\}
 
-"Pretty print" unable: output is the raw print statement output string
+"Pretty print" enable: output of print statement is converted and is rendered
 
 ## Example
 
@@ -66,7 +74,7 @@ From a markdown file such as:
 d = 1e3
 m = 2 * d
 print('The total mass is {:.2f} $m^3$'.format(m))
-\```
+```
 ```
 
 `pandoc FILE --to markdown -F filter_pandoc_run_py.py -o OUTFILE.md`
@@ -77,14 +85,9 @@ print('The total mass is {:.2f} $m^3$'.format(m))
 > > The total mass is 2000.00 $m^3$
 ```
 
-It is also possible to use the syntax:
+### More examples
 
-```
-```python
-# filter: { .run .class key1=val key2="val 2"}
-code ..
-```
-```
+- Check file `./tests/test.md` and `./tests/test_common_mark.md`
 
 ## Getting Help
 
