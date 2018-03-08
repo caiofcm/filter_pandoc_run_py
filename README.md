@@ -63,7 +63,7 @@ The following syntax is also support for enabling standard IDE code highlight:
 
 The syntax is:
 
-	\`(print(code))\`\{.run\}
+	`(print(code))`{.run}
 
 "Pretty print" enable: output of print statement is converted and is rendered
 
