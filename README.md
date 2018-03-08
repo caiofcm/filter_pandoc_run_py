@@ -48,6 +48,8 @@ Create a regular markdown code but appending a class .run to it.
 
 ### For `CodeBlock`
 
+Output print statement as a BlockQuote or paragraph. You can hide the generation code.
+
 Syntax: `{.python .run format=[blockquote (default), text] hide_code=[False (default), True] }`
 
 The following syntax is also support for enabling standard IDE code highlight:
@@ -61,9 +63,11 @@ The following syntax is also support for enabling standard IDE code highlight:
 
 ### For `Code`
 
+Output print statement as inline text.
+
 The syntax is:
 
-	`(print(code))`{.run}
+	`print(code)`{.run}
 
 "Pretty print" enable: output of print statement is converted and is rendered
 
