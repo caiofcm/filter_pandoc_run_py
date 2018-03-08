@@ -1,13 +1,19 @@
 import os
 from setuptools import setup, find_packages
 
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except(IOError, ImportError):
+    long_description = open('README.md').read()
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='filter_pandoc_run_py',
-      version='0.5',
+      version='0.6.1',
       description="Pandoc filter to run python code blocks",
-      long_description=read('README.md'),
+      long_description=long_description,
       url='https://github.com/caiofcm/filter_pandoc_run_py',
       download_url='https://github.com/caiofcm/filter_pandoc_run_py/archive/0.1.tar.gz',
       author='Caio Marcellos',
