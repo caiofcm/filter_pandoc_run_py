@@ -52,10 +52,10 @@ Syntax: `{.python .run format=[blockquote (default), text] hide_code=[False (def
 
 The following syntax is also support for enabling standard IDE code highlight:
 
-```python
-#filter: {.run format=[blockquote (default), text] hide_code=[False (default), True] }
-.... code ....
-```
+	```python
+	#filter: {.run format=[blockquote (default), text] hide_code=[False (default), True] }
+	.... code ....
+	```
 
 "Pretty print" enable: output of print statement is converted and is rendered
 
@@ -69,13 +69,11 @@ The syntax is \`(print(code))\`\{.run\}
 
 From a markdown file such as:
 
-```
-```{.python .run}
-d = 1e3
-m = 2 * d
-print('The total mass is {:.2f} $m^3$'.format(m))
-```
-```
+	```{.python .run}
+	d = 1e3
+	m = 2 * d
+	print('The total mass is {:.2f} $m^3$'.format(m))
+	```
 
 `pandoc FILE --to markdown -F filter_pandoc_run_py.py -o OUTFILE.md`
 
