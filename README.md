@@ -89,6 +89,15 @@ From a markdown file such as:
 > > The total mass is 2000.00 $m^3$
 ```
 
+Generating pyplot images embedded in markdown file:
+
+	```{.python .run caption="Figure Number One" label="my_fig"}
+	import matplotlib
+	matplotlib.use('AGG')
+	from matplotlib import pyplot as plt
+	plt.plot([1, 2], [3, 4], 'dr-')
+	```
+
 ### More examples
 
 - Check files `./tests/test.md` and `./tests/test_common_mark.md`

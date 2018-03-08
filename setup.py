@@ -11,7 +11,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='filter_pandoc_run_py',
-      version='0.6.1',
+      version='0.6.2',
       description="Pandoc filter to run python code blocks",
       long_description=long_description,
       url='https://github.com/caiofcm/filter_pandoc_run_py',
