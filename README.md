@@ -91,7 +91,7 @@ From a markdown file such as:
 
 ### More examples
 
-- Check file `./tests/test.md` and `./tests/test_common_mark.md`
+- Check files `./tests/test.md` and `./tests/test_common_mark.md`
 
 ## Getting Help
 
