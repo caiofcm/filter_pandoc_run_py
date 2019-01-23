@@ -168,6 +168,8 @@ def handle_inline_plot(code, classes, keyvals, format, ident):
 		
 		kw_wdth = 'width{}'.format(num) if num > 1 else 'width'
 		width = get_key_in_keyval_list(kw, kw_wdth, '')
+
+		# Parei aqui-> figures attribute
 		
 
 		kw_ext = 'ext{}'.format(num) if num > 1 else 'ext'
@@ -193,7 +195,8 @@ def workaround_classes_with_commonmark_syntax(code, classes, keyvals, value):
 	filter_configs = code[code.find("{") + 1:code.find("}")]
 	found_class = re.findall(r'\.(\w+)', filter_configs)
 	kw_pairs_simple = re.findall(r'(\w+)=(\w+)', filter_configs)
-	kw_pairs_cplx = re.findall(r'(\w+)=("[\w\-\s]+")', filter_configs)
+	# kw_pairs_cplx = re.findall(r'(\w+)=("[\w\-\s]+")', filter_configs)
+	kw_pairs_cplx = re.findall(r'(\w+)=("[^"]+")', filter_configs)	
 	found_keyvals = kw_pairs_simple + kw_pairs_cplx
 	classes += found_class
 	keyvals += found_keyvals
