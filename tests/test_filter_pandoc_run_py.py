@@ -112,6 +112,10 @@ print('A={}'.format(2.0))
 
 def test_md_sample_print_text():
 	MD_SAMPLE = '''
+# Normal code Here
+
+Parapgrah here
+
 ```{.python .run format=text}
 print('A={}'.format(2.0))
 ```
@@ -270,7 +274,8 @@ def test_run_pandoc_like():
 ###########################################
 ###########################################
 def insider_Debugger():
-	test_run_pandoc_like()
+	# test_run_pandoc_like()
+	test_md_sample_print_text()
 	pass
 
 if __name__ == '__main__':
