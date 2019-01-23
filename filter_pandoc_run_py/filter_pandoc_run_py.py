@@ -29,7 +29,7 @@ from pandocfilters import *
 ###########################################
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-code_locals = {'fig_counter': 0}
+code_locals = {'fig_counter': 0, 'used_fig_num': []}
 
 
 ############################################
@@ -147,34 +147,49 @@ def handle_inline_plot(code, classes, keyvals, format, ident):
 	kw = keyvals
 	ast_ret_code = []
 	md_code = ''
+	last_number_counter = len(code_locals['used_fig_num'])
 	# ast_fig_kw = kw.copy() #addition keyvalus ? todo
-	for num in fignums:
-		unique_code = repr(plt.figure(num))
+	for num in fignums: #and num not in code_locals['used_fig_num']:
+		if num in code_locals['used_fig_num']:
+			continue
+		unique_code = repr(plt.figure(num)) + str(num)
 		fname = get_filename4code("plt", unique_code)
-		kw_cap = 'caption{}'.format(num) if num > 1 else 'caption'
-		caption = get_key_in_keyval_list(kw, kw_cap, '')  # fname.split('\\')[1]
-		kw_lbl = 'label{}'.format(num) if num > 1 else 'label'
-		label = get_key_in_keyval_list(kw, kw_lbl, code_locals['fig_counter'])
+		num_mod = num - last_number_counter
+
+		use_title = bool(get_key_in_keyval_list(kw, 'title_as_caption', False))
+		if not use_title:
+			kw_cap = 'caption{}'.format(num_mod) if num_mod > 1 else 'caption'
+			caption = get_key_in_keyval_list(kw, kw_cap, '')  # fname.split('\\')[1]
+		else:
+			caption = plt.gca().title._text
+
+		kw_lbl = 'label{}'.format(num_mod) if num_mod > 1 else 'label'
+		label = get_key_in_keyval_list(kw, kw_lbl, 'label-{}'.format(num))
+		
 		kw_wdth = 'width{}'.format(num) if num > 1 else 'width'
 		width = get_key_in_keyval_list(kw, kw_wdth, '')
+		
+
 		kw_ext = 'ext{}'.format(num) if num > 1 else 'ext'
 		ext = get_key_in_keyval_list(kw, kw_ext, 'png')
+		
 		filePath = '{}.{}'.format(fname, ext)
 		plt.savefig(filePath, format=ext)
 		ast_ret_code += [Para([Image([ident, [], []],
                                [Str(caption)], [filePath, "fig:"])])]	
+		code_locals['used_fig_num'].append(num)
 	return ast_ret_code
 
 
-def workaround_classes_with_commonmark_syntax(code, classes, keyvals):
+def workaround_classes_with_commonmark_syntax(code, classes, keyvals, value):
 	'''
 	Configuration string as a pytho comment to get classes and key-vals
 	Example of configuration: #filter: {.c1 .c2 key1=val1 key2="value 2" }
 	'''
 	try:
 		re.search(r'^\s*#\s*filter:\s+{', code).group()
-	except AttributeError	as e:
-		return code
+	except AttributeError:
+		return
 	filter_configs = code[code.find("{") + 1:code.find("}")]
 	found_class = re.findall(r'\.(\w+)', filter_configs)
 	kw_pairs_simple = re.findall(r'(\w+)=(\w+)', filter_configs)
@@ -182,13 +197,15 @@ def workaround_classes_with_commonmark_syntax(code, classes, keyvals):
 	found_keyvals = kw_pairs_simple + kw_pairs_cplx
 	classes += found_class
 	keyvals += found_keyvals
+	# Modiy Value to remove filter line:
+	value[1] = code[code.find("}")+1:]
 	return
 
 def run_py_code_block(key, value, format, meta):
 	return_ast = []
 	if key == 'CodeBlock':
 		[[ident, classes, keyvals], code] = value
-		workaround_classes_with_commonmark_syntax(code, classes, keyvals)
+		workaround_classes_with_commonmark_syntax(code, classes, keyvals, value)
 
 		if "python" in classes and "run" in classes:
 			# caption, typef, keyvals = get_caption(keyvals)
@@ -211,7 +228,7 @@ def run_py_code_block(key, value, format, meta):
 				fignums = code_locals['plt'].get_fignums()
 				if len(fignums) > 0:
 					ast_figure = handle_inline_plot(code, classes, keyvals, format, ident)
-					code_locals['plt'].close('all')
+					# code_locals['plt'].close('all')
 					return_ast += ast_figure
 				# Continue from here:
 				# https://github.com/jgm/pandocfilters/blob/master/examples/plantuml.py
