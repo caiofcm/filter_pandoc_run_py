@@ -203,7 +203,8 @@ def test_parser_filter_config_new_syntax():
 	S = '# filter: {.run caption="cap1" label="lbl1"}'
 	classes = []
 	kv = []
-	workaround_classes_with_commonmark_syntax(S, classes, kv)
+	value = [['', classes, kv], S]
+	workaround_classes_with_commonmark_syntax(S, classes, kv, value)
 	
 	assert 'run' in classes
 	assert 'caption' in kv[0][0]
@@ -249,6 +250,19 @@ plt.plot([1, 2], [3, 4], 'dr-')
 	assert d['blocks'][1]['c'][0]['t'] == 'Image'
 	pass #This is not failing on win but is failing at travis ci
 
+def test_should_not_show_filter_comment_line_in_common_mark_mode():
+	MD_SAMPLE = '''
+```python
+# filter: {.run key1=val1 .class2 key2="valor dois"}
+d = 1e3
+```
+'''
+	ast_string = run_pandoc(MD_SAMPLE)
+	processed = applyJSONFilters([run_py_code_block], ast_string)
+	d = json.loads(processed)
+	assert 'filter' not in d['blocks'][0]['c'][1]	
+	assert '1e3' in d['blocks'][0]['c'][1]	
+
 #--------------------------------------------
 # 	 Testing Full Convertion 	 
 #--------------------------------------------
@@ -259,7 +273,7 @@ def test_run_pandoc_like():
 	It is generated from test.md as:
 	pandoc test.md --to json -o test.json
 	"""
-	call(['pandoc', os.path.join(dir_path, 'test_one_p.md'), '--to',
+	call(['pandoc', os.path.join(dir_path, '../examples/runnable_three_figures_dif_cells.md'), '--to',
             'json', '-o', os.path.join(dir_path, 'test.json')])
 	dt = read_json(os.path.join(dir_path, 'test.json'), 'string')
 	applyJSONFilters([run_py_code_block], dt)
@@ -275,7 +289,8 @@ def test_run_pandoc_like():
 ###########################################
 def insider_Debugger():
 	# test_run_pandoc_like()
-	test_md_sample_print_text()
+	# test_md_sample_print_text()
+	test_should_not_show_filter_comment_line_in_common_mark_mode()
 	pass
 
 if __name__ == '__main__':
