@@ -163,24 +163,38 @@ def handle_inline_plot(code, classes, keyvals, format, ident):
 		else:
 			caption = plt.gca().title._text
 
-		kw_lbl = 'label{}'.format(num_mod) if num_mod > 1 else 'label'
-		label = get_key_in_keyval_list(kw, kw_lbl, 'label-{}'.format(num))
+		# kw_lbl = 'label{}'.format(num_mod) if num_mod > 1 else 'label'
+		# label = get_key_in_keyval_list(kw, kw_lbl, 'label-{}'.format(num))
 		
-		kw_wdth = 'width{}'.format(num) if num > 1 else 'width'
-		width = get_key_in_keyval_list(kw, kw_wdth, '')
+		# kw_wdth = 'width{}'.format(num) if num > 1 else 'width'
+		# width = get_key_in_keyval_list(kw, kw_wdth, '')
 
 		# Parei aqui-> figures attribute
-		
+		kw_figattr = 'figattr{}'.format(num_mod) if num_mod > 1 else 'figattr'
+		figattr_raw = get_key_in_keyval_list(kw, kw_figattr, '')
+		if figattr_raw != '':
+			figattr_id, figattr_kws = figattr_str_convertion(figattr_raw)
+		else:
+			figattr_id, figattr_kws = '', [] 
 
 		kw_ext = 'ext{}'.format(num) if num > 1 else 'ext'
 		ext = get_key_in_keyval_list(kw, kw_ext, 'png')
 		
 		filePath = '{}.{}'.format(fname, ext)
 		plt.savefig(filePath, format=ext)
-		ast_ret_code += [Para([Image([ident, [], []],
+		ast_ret_code += [Para([Image([figattr_id, [], figattr_kws],
                                [Str(caption)], [filePath, "fig:"])])]	
 		code_locals['used_fig_num'].append(num)
 	return ast_ret_code
+
+def figattr_str_convertion(s):
+	fig_id = re.findall(r'#([\w\:]+)', s)
+	if len(fig_id)  == 0:
+		raise ValueError('Error capturing figure ID.')
+	elif len(fig_id) > 1:
+		raise ValueError('Error capturing figure ID. Use single figure ID')
+	kws = re.findall(r'(\w+)=([\w\'\.\:]+)', s)
+	return fig_id[0], kws
 
 
 def workaround_classes_with_commonmark_syntax(code, classes, keyvals, value):

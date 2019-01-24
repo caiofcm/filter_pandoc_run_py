@@ -4,15 +4,15 @@ fignos-plus-name: Fig.
 header-includes: \usepackage{caption}
 ...
 
-<!-- Reference to @fig:1.
+Reference to @fig:1.
 
-![The number one.](img/fig-1.png){#fig:1 width=5in}
+![The number one.](plt-images/8f1a04c1b6419e08455f95cd1f28cfa7bddf2caa.png){#fig:1 width=5in}
 
-![The number two.](img/fig-2.png){#fig:2 width=5in}
+![The number two.](plt-images/../../plt-images/8f1a04c1b6419e08455f95cd1f28cfa7bddf2caa.png){#fig:2 width=5in}
 
 *@fig:2 is given above.
 
-![The number three.](img/fig-3.png){#fig: width=1in} -->
+![The number three.](plt-images/b59b4a1518715d260505263dcf0fe4bc375bdcae.png){#fig: width=1in}
 
 ```python
 #filter: {.run caption="Figure Number One" label="my_fig" hide_code=true title_as_caption=true}
