@@ -2,7 +2,7 @@
 # Creates Three figures Matplotlib figure
 
 ```python
-#filter: {.run caption="Figure Number One" label="my_fig" hide_code=true title_as_caption=true}
+#filter: {.run caption="Figure Number One" label="my_fig" hide_code=true title_as_caption=true figattr="#fig:1 width=9in"}
 import matplotlib
 matplotlib.use('AGG')
 from matplotlib import pyplot as plt
@@ -12,10 +12,16 @@ plt.title('This is figure caption from python')
 ```
 
 ```python
-#filter: {.run caption="Second Figure" caption2="Third Figure" label="my_fig_2" label2="my_fig_3" hide_code=true}
-# import matplotlib
-# matplotlib.use('AGG')
-# from matplotlib import pyplot as plt
+#filter: {.run caption="Second Figure" 
+# caption2="Third Figure" 
+# label="my_fig_2" 
+# label2="my_fig_3" 
+# hide_code=true 
+# figattr="#fig:2 width=8in"
+# figattr2="#fig:3 width=3in tag='B.1'"
+# 
+# }
+
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm

@@ -8,7 +8,7 @@ def test_inline_plot_mpl_multiples():
 # Creates Three figures Matplotlib figure
 
 ```python
-#filter: {.run caption="Figure Number One" label="my_fig" hide_code=true title_as_caption=true fignos="#fig:1 width=5in"}
+#filter: {.run caption="Figure Number One" label="my_fig" hide_code=true title_as_caption=true figattr="#fig:1 width=5in"}
 import matplotlib
 matplotlib.use('AGG')
 from matplotlib import pyplot as plt
@@ -17,7 +17,7 @@ plt.plot([1, 2], [-1, -4], 'or-')
 plt.title('This is figure caption from python')
 ```
 
-```{.python .run caption="Second Figure" caption2="Third Figure" label="my_fig_2" label2="my_fig_3" hide_code=true}
+```{.python .run caption="Second Figure" caption2="Third Figure" label="my_fig_2" label2="my_fig_3" hide_code=true figattr="#fig:2 width=8in" figattr2="#fig:3 width=3in tag='B.1'"}
 # import matplotlib
 # matplotlib.use('AGG')
 # from matplotlib import pyplot as plt
